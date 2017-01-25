@@ -1,4 +1,4 @@
-package com.example.ahmed.eventschedule.DateAndTime;
+package com.example.ahmed.eventschedule.Pickers;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;

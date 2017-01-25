@@ -3,17 +3,18 @@ package com.example.ahmed.eventschedule;
 import java.util.Calendar;
 
 public class Event {
-    private String name, place;
+    private String name, place, color;
     private int id;
     private boolean Done = false;
     private Calendar startDate, endDate, reminderTime;
 
-    public Event(String name, String place, Calendar startDate, Calendar endDate, Calendar reminderTime) {
+    public Event(String name, String place, Calendar startDate, Calendar endDate, Calendar reminderTime, String color) {
         this.name = name;
         this.place = place;
         this.startDate = startDate;
         this.endDate = endDate;
         this.reminderTime = reminderTime;
+        this.color = color;
 
         if (!endDate.after(Calendar.getInstance()))
             Done = true;
@@ -53,5 +54,9 @@ public class Event {
 
     public Calendar getReminderTime() {
         return reminderTime;
+    }
+
+    public String getColor() {
+        return color;
     }
 }

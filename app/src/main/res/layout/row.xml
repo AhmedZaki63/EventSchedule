@@ -11,10 +11,34 @@
         android:orientation="horizontal"
         android:weightSum="10">
 
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:padding="10dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/event_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:src="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/event_icon_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:fontFamily="sans-serif"
+                android:text="A"
+                android:textColor="#FFFFFF"
+                android:textSize="32dp" />
+        </FrameLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="8"
+            android:layout_weight="6"
             android:orientation="vertical"
             android:padding="10dp">
 

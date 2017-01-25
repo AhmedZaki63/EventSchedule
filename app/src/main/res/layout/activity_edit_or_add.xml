@@ -15,37 +15,82 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp">
+            android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/event_name_edit"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Event Title"
-                android:inputType="textAutoComplete"
-                android:maxLines="1"
-                android:textColor="@android:color/black" />
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/event_name_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Event Title"
+                    android:inputType="textAutoComplete"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black" />
 
-        <android.support.design.widget.TextInputLayout
+            </android.support.design.widget.TextInputLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:padding="10dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/color_selector"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center"
+                    android:src="@color/colorAccent"
+                    android:text="Color"
+                    android:textSize="20sp" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp">
+            android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/event_location_edit"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Event Location"
-                android:inputType="textAutoComplete"
-                android:maxLines="1"
-                android:textColor="@android:color/black" />
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/event_location_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Event Location"
+                    android:inputType="textAutoComplete"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/location_selector"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_place"
+                    android:text="Color" />
+            </FrameLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

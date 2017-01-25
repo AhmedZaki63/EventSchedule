@@ -9,13 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.ahmed.eventschedule.Adapters.EventAdapter;
 import com.example.ahmed.eventschedule.DataBase.ControlRealm;
 
 import java.util.ArrayList;
 
 public class MainFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
-    static ControlRealm controlRealm;
+    public static ControlRealm controlRealm;
     static ArrayList<Event> upEvents, doneEvents, allEvents;
     static EventAdapter eventAdapter;
     TextView emptyListText;

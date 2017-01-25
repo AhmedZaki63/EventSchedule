@@ -19,6 +19,8 @@ public class EventRealm extends RealmObject {
 
     private Date reminderDate;
 
+    private String color;
+
     public int getId() {
         return id;
     }
@@ -65,5 +67,13 @@ public class EventRealm extends RealmObject {
 
     public void setReminderDate(Date reminderDate) {
         this.reminderDate = reminderDate;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

@@ -1,12 +1,14 @@
-package com.example.ahmed.eventschedule;
+package com.example.ahmed.eventschedule.Adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.ahmed.eventschedule.MainFragment;
+
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    SectionsPagerAdapter(FragmentManager fm) {
+    public SectionsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

@@ -32,6 +32,7 @@ public class ControlRealm {
                 eve.setPlace(event.getPlace());
                 eve.setStartDate(event.getStartDate().getTime());
                 eve.setReminderDate(event.getReminderTime().getTime());
+                eve.setColor(event.getColor());
             }
         });
     }
@@ -58,7 +59,7 @@ public class ControlRealm {
             Calendar reminderDate = Calendar.getInstance();
             reminderDate.setTime(res.getReminderDate());
 
-            Event e = new Event(res.getName(), res.getPlace(), startDate, endDate, reminderDate);
+            Event e = new Event(res.getName(), res.getPlace(), startDate, endDate, reminderDate, res.getColor());
             e.setId(res.getId());
             events.add(e);
         }
@@ -75,6 +76,7 @@ public class ControlRealm {
                 eve.setStartDate(event.getStartDate().getTime());
                 eve.setEndDate(event.getEndDate().getTime());
                 eve.setReminderDate(event.getReminderTime().getTime());
+                eve.setColor(event.getColor());
             }
         });
     }

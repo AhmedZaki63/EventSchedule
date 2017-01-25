@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
@@ -16,10 +17,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.ahmed.eventschedule.DateAndTime.DatePickerFragment;
-import com.example.ahmed.eventschedule.DateAndTime.TimePickerFragment;
+import com.example.ahmed.eventschedule.Pickers.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,14 +30,19 @@ public class EditOrAddActivity extends AppCompatActivity {
 
     public Calendar startDate, endDate, eventStartTime, eventEndTime, reminderDate, reminderTime;
     public Button startDateButton, endDateButton, startTimeButton, endTimeButton, reminderDateButton, reminderTimeButton;
-    String title, location;
-    EditText nameText, locationText;
+    public String title, location;
+    public EditText nameText, locationText;
     boolean inEdit;
+    public static String eventColor;
+    ImageView colorSelectionImage, locationSelectionImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_or_add);
+
+        //set default icon eventColor
+        eventColor = "#2196F3";
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("E dd/MM/yyyy", Locale.ENGLISH);
         SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
@@ -106,6 +112,24 @@ public class EditOrAddActivity extends AppCompatActivity {
             }
         });
 
+        colorSelectionImage = (ImageView) findViewById(R.id.color_selector);
+        colorSelectionImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EditOrAddActivity.this, ColorPickerFragment.class);
+                startActivity(intent);
+            }
+        });
+
+        locationSelectionImage = (ImageView) findViewById(R.id.location_selector);
+        locationSelectionImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PlacePickerFragment placePickerFragment = new PlacePickerFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.activity_edit_or_add, placePickerFragment, "").commit();
+            }
+        });
+
         if (inEdit) {
             Event currentEvent;
             int position = getIntent().getIntExtra("position", -1);
@@ -124,6 +148,7 @@ public class EditOrAddActivity extends AppCompatActivity {
             eventStartTime = currentEvent.getStartDate();
             eventEndTime = currentEvent.getEndDate();
             reminderTime = currentEvent.getReminderTime();
+            eventColor = currentEvent.getColor();
         }
 
         startDateButton.setText(dateFormat.format(startDate.getTime()));
@@ -132,6 +157,12 @@ public class EditOrAddActivity extends AppCompatActivity {
         endTimeButton.setText(timeFormat.format(eventEndTime.getTime()));
         reminderDateButton.setText(dateFormat.format(reminderDate.getTime()));
         reminderTimeButton.setText(timeFormat.format(reminderTime.getTime()));
+    }
+
+    @Override
+    protected void onResume() {
+        colorSelectionImage.setColorFilter(Color.parseColor(eventColor));
+        super.onResume();
     }
 
     @Override
@@ -168,7 +199,7 @@ public class EditOrAddActivity extends AppCompatActivity {
             reminderDate.set(Calendar.MINUTE, reminderTime.get(Calendar.MINUTE));
             reminderDate.set(Calendar.SECOND, 0);
 
-            final Event event = new Event(title, location, startDate, endDate, reminderDate);
+            final Event event = new Event(title, location, startDate, endDate, reminderDate, eventColor);
             if (inEdit) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(EditOrAddActivity.this);
                 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {

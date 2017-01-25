@@ -1,23 +1,30 @@
-package com.example.ahmed.eventschedule;
+package com.example.ahmed.eventschedule.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.ahmed.eventschedule.DetailsActivity;
+import com.example.ahmed.eventschedule.Event;
+import com.example.ahmed.eventschedule.MainFragment;
+import com.example.ahmed.eventschedule.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
+public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
     private ArrayList<Event> events;
     private Context context;
 
-    EventAdapter(Context context, ArrayList<Event> events) {
+    public EventAdapter(Context context, ArrayList<Event> events) {
         this.context = context;
         this.events = events;
     }
@@ -30,9 +37,14 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
 
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
-        holder.eventName.setText(events.get(position).getName());
+        Event event = events.get(position);
+        holder.eventName.setText(event.getName());
+        //String[] arrayOfStrings = context.getResources().getStringArray(R.array.colors);
+        //String randomColor = arrayOfStrings[new Random().nextInt(arrayOfStrings.length)];
+        holder.icon.setColorFilter(Color.parseColor(event.getColor()));
+        holder.iconText.setText(String.valueOf(event.getName().charAt(0)).toUpperCase());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy h:mm a", Locale.ENGLISH);
-        holder.eventDate.setText(dateFormat.format(events.get(position).getStartDate().getTime()));
+        holder.eventDate.setText(dateFormat.format(event.getStartDate().getTime()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +65,7 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
         });
     }
 
-    Boolean isEmpty() {
+    public Boolean isEmpty() {
         return events.isEmpty();
     }
 
@@ -62,21 +74,24 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
         return events.size();
     }
 
-    void setFilter(ArrayList<Event> newEvents) {
+    public void setFilter(ArrayList<Event> newEvents) {
         events = new ArrayList<>();
         events.addAll(newEvents);
         notifyDataSetChanged();
     }
 
     class Holder extends RecyclerView.ViewHolder {
-        TextView eventName, eventDate;
+        TextView eventName, eventDate, iconText;
         ImageButton button;
+        ImageView icon;
 
         Holder(final View itemView) {
             super(itemView);
             eventName = (TextView) itemView.findViewById(R.id.event_name);
             eventDate = (TextView) itemView.findViewById(R.id.event_date);
             button = (ImageButton) itemView.findViewById(R.id.event_delete);
+            icon = (ImageView) itemView.findViewById(R.id.event_icon);
+            iconText = (TextView) itemView.findViewById(R.id.event_icon_text);
         }
     }
 }
