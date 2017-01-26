@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.ahmed.eventschedule.DetailsActivity;
 import com.example.ahmed.eventschedule.Event;
+import com.example.ahmed.eventschedule.MainActivity;
 import com.example.ahmed.eventschedule.MainFragment;
 import com.example.ahmed.eventschedule.R;
 
@@ -24,8 +25,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
     private ArrayList<Event> events;
     private Context context;
 
-    public EventAdapter(Context context, ArrayList<Event> events) {
+    public EventAdapter(Context context) {
         this.context = context;
+    }
+
+    public void changeData(ArrayList<Event> events) {
         this.events = events;
     }
 
@@ -38,9 +42,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
         Event event = events.get(position);
+
         holder.eventName.setText(event.getName());
-        //String[] arrayOfStrings = context.getResources().getStringArray(R.array.colors);
-        //String randomColor = arrayOfStrings[new Random().nextInt(arrayOfStrings.length)];
         holder.icon.setColorFilter(Color.parseColor(event.getColor()));
         holder.iconText.setText(String.valueOf(event.getName().charAt(0)).toUpperCase());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy h:mm a", Locale.ENGLISH);
@@ -59,6 +62,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
             @Override
             public void onClick(View view) {
                 MainFragment.controlRealm.deleteEvent(events.get(holder.getAdapterPosition()).getId());
+                if (MainActivity.page == 0)
+                    MainFragment.upEvents.remove(holder.getAdapterPosition());
+                else
+                    MainFragment.doneEvents.remove(holder.getAdapterPosition());
                 events.remove(holder.getAdapterPosition());
                 notifyItemRemoved(holder.getAdapterPosition());
             }
@@ -69,12 +76,23 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
         return events.isEmpty();
     }
 
+    public void removeAll() {
+        events.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return events.size();
     }
 
-    public void setFilter(ArrayList<Event> newEvents) {
+    public void setFilter(String newText, ArrayList<Event> list) {
+        ArrayList<Event> newEvents = new ArrayList<>();
+        for (Event event : list) {
+            String name = event.getName().toLowerCase();
+            if (name.contains(newText))
+                newEvents.add(event);
+        }
         events = new ArrayList<>();
         events.addAll(newEvents);
         notifyDataSetChanged();

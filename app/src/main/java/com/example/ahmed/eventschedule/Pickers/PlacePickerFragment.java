@@ -26,7 +26,7 @@ public class PlacePickerFragment extends Fragment {
         try {
             startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
-            Toast.makeText(getActivity(), "Build Error", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Google Play Services Error", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -36,7 +36,7 @@ public class PlacePickerFragment extends Fragment {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(getActivity(), data);
                 EditOrAddActivity editOrAdd = (EditOrAddActivity) getActivity();
-                editOrAdd.location = place.getName() + " : " + place.getAddress();
+                editOrAdd.location = place.getName().toString();
                 editOrAdd.locationText.setText(editOrAdd.location);
             }
         }

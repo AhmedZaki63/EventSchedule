@@ -8,12 +8,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 public class ControlRealm {
-    public boolean change;
     private Realm realm;
 
     public ControlRealm(Context context) {
@@ -37,12 +35,16 @@ public class ControlRealm {
         });
     }
 
-    public void clearAllEvent() {
-        final RealmResults<EventRealm> res = realm.where(EventRealm.class).findAll();
+    public void clearEvents(final int page) {
+        final RealmResults<EventRealm> result = realm.where(EventRealm.class).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                res.deleteAllFromRealm();
+                for (EventRealm res : result) {
+                    if (page == 0 && res.getEndDate().after(Calendar.getInstance().getTime())
+                            || page == 1 && !res.getEndDate().after(Calendar.getInstance().getTime()))
+                        res.deleteFromRealm();
+                }
             }
         });
     }
@@ -93,15 +95,5 @@ public class ControlRealm {
 
     private int getNextPrimaryKey() {
         return realm.where(EventRealm.class).max("id").intValue() + 1;
-    }
-
-    public boolean isDataChanged() {
-        realm.addChangeListener(new RealmChangeListener<Realm>() {
-            @Override
-            public void onChange(Realm element) {
-                change = true;
-            }
-        });
-        return change;
     }
 }

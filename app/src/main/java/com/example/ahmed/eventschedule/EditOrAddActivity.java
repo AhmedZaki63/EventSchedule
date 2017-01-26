@@ -20,7 +20,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.ahmed.eventschedule.Pickers.*;
+import com.example.ahmed.eventschedule.Pickers.ColorPickerActivity;
+import com.example.ahmed.eventschedule.Pickers.DatePickerFragment;
+import com.example.ahmed.eventschedule.Pickers.PlacePickerFragment;
+import com.example.ahmed.eventschedule.Pickers.TimePickerFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -116,7 +119,7 @@ public class EditOrAddActivity extends AppCompatActivity {
         colorSelectionImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EditOrAddActivity.this, ColorPickerFragment.class);
+                Intent intent = new Intent(EditOrAddActivity.this, ColorPickerActivity.class);
                 startActivity(intent);
             }
         });
@@ -133,7 +136,7 @@ public class EditOrAddActivity extends AppCompatActivity {
         if (inEdit) {
             Event currentEvent;
             int position = getIntent().getIntExtra("position", -1);
-            if (MainActivity.viewPager.getCurrentItem() == 0)
+            if (MainActivity.page == 0)
                 currentEvent = MainFragment.upEvents.get(position);
             else
                 currentEvent = MainFragment.doneEvents.get(position);
@@ -184,9 +187,16 @@ public class EditOrAddActivity extends AppCompatActivity {
     public void onSaveEvent() {
         title = nameText.getText().toString().trim();
         location = locationText.getText().toString().trim();
+        Calendar currentDate = Calendar.getInstance();
 
         if (TextUtils.isEmpty(title) || TextUtils.isEmpty(location))
             Toast.makeText(EditOrAddActivity.this, "Please Enter All Data", Toast.LENGTH_LONG).show();
+        else if (endDate.compareTo(startDate) != 1)
+            Toast.makeText(getBaseContext(), "End Time is Before or Equal Start Time", Toast.LENGTH_LONG).show();
+        else if (currentDate.compareTo(endDate) == 1)
+            Toast.makeText(getBaseContext(), "End Time is Before or Equal Current Time", Toast.LENGTH_LONG).show();
+        else if (currentDate.compareTo(reminderDate) == 1)
+            Toast.makeText(getBaseContext(), "Reminder Time is Before or Equal Current Time", Toast.LENGTH_LONG).show();
         else {
             //Merge date and time and set seconds to 0
             startDate.set(Calendar.HOUR_OF_DAY, eventStartTime.get(Calendar.HOUR_OF_DAY));
@@ -220,7 +230,6 @@ public class EditOrAddActivity extends AppCompatActivity {
                 dialog.show();
             } else {
                 MainFragment.controlRealm.addEvent(event);
-                MainFragment.upEvents.add(event);
                 scheduleNotification(event);
                 NavUtils.navigateUpFromSameTask(EditOrAddActivity.this);
             }
@@ -228,12 +237,17 @@ public class EditOrAddActivity extends AppCompatActivity {
     }
 
     private void scheduleNotification(Event event) {
-        Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle(event.getName());
-        builder.setContentText(event.getPlace());
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0));
-        builder.setAutoCancel(true);
+        Notification.Builder builder = new Notification.Builder(this)
+                .setContentTitle(event.getName())
+                .setContentText(event.getPlace())
+                .setSmallIcon(R.mipmap.ic_launcher);
+
+        Intent launchIntent = new Intent(this, MainActivity.class);
+        //Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.example.ahmed.eventschedule");
+
+        builder.setContentIntent(PendingIntent.getActivity(this, 0, launchIntent, 0))
+                .setAutoCancel(true);
+
         Intent notificationIntent = new Intent(this, NotificationBroadcast.class);
         notificationIntent.putExtra("title", event.getName());
         notificationIntent.putExtra("text", event.getPlace());

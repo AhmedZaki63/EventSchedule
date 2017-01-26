@@ -15,6 +15,7 @@
 
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -28,13 +29,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".EditOrAddActivity">
+        <activity
+            android:name=".EditOrAddActivity"
+            android:configChanges="orientation|screenSize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".Pickers.ColorPickerFragment"
+            android:name=".Pickers.ColorPickerActivity"
             android:label="Colors"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
 

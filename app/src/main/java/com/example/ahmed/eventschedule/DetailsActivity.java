@@ -2,6 +2,7 @@ package com.example.ahmed.eventschedule;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +23,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         position = getIntent().getIntExtra("position", -1);
 
-        if (MainActivity.viewPager.getCurrentItem() == 0)
+        if (MainActivity.page == 0)
             event = MainFragment.upEvents.get(position);
         else
             event = MainFragment.doneEvents.get(position);
@@ -75,18 +76,10 @@ public class DetailsActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.action_delete:
-                //removeItem(position);
-                finish();
+                MainFragment.controlRealm.deleteEvent(event.getId());
+                NavUtils.navigateUpFromSameTask(DetailsActivity.this);
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void removeItem(int position) {
-        if (MainActivity.viewPager.getCurrentItem() == 1) {
-            MainFragment.upEvents.remove(position);
-        } else {
-            MainFragment.upEvents.remove(position);
-        }
     }
 }
