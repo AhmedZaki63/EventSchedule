@@ -63,11 +63,15 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
             @Override
             public void onClick(View view) {
                 MainFragment.controlRealm.deleteEvent(events.get(holder.getAdapterPosition()).getId());
-                if (mainFragment.page == 0)
+
+                //delete from original ArrayList
+                if (mainFragment.page == 0) {
                     mainFragment.upEvents.remove(holder.getAdapterPosition());
-                else
+                    changeData(mainFragment.upEvents);
+                } else {
                     mainFragment.doneEvents.remove(holder.getAdapterPosition());
-                events.remove(holder.getAdapterPosition());
+                    changeData(mainFragment.doneEvents);
+                }
                 notifyItemRemoved(holder.getAdapterPosition());
                 mainFragment.setEmptyListText();
             }
@@ -79,6 +83,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
     }
 
     public void removeAll() {
+        if (mainFragment.page == 0)
+            mainFragment.upEvents.clear();
+        else
+            mainFragment.doneEvents.clear();
         events.clear();
         notifyDataSetChanged();
     }

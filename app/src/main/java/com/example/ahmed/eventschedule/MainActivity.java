@@ -13,6 +13,8 @@ import com.example.ahmed.eventschedule.Adapters.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
+    FloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,11 +28,17 @@ public class MainActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         ViewPager viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(sectionsPagerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                fab.show();
+            }
+        });
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

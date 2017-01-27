@@ -240,11 +240,11 @@ public class EditOrAddActivity extends AppCompatActivity {
         Notification.Builder builder = new Notification.Builder(this)
                 .setContentTitle(event.getName())
                 .setContentText(event.getPlace())
-                .setSmallIcon(R.mipmap.ic_launcher);
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setDefaults(Notification.DEFAULT_SOUND);
 
-        Intent launchIntent = new Intent(this, MainActivity.class);
-        //Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.example.ahmed.eventschedule");
-
+        Intent launchIntent = new Intent(this, MainActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         builder.setContentIntent(PendingIntent.getActivity(this, 0, launchIntent, 0))
                 .setAutoCancel(true);
 

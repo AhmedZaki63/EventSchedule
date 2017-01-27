@@ -90,11 +90,26 @@ public class MainFragment extends Fragment implements SearchView.OnQueryTextList
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu, adds items to the action bar if it is present.
         inflater.inflate(R.menu.menu_main, menu);
         MenuItem search = menu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(search);
         searchView.setOnQueryTextListener(this);
+        MenuItemCompat.setOnActionExpandListener(search, new MenuItemCompat.OnActionExpandListener() {
+            MainActivity mainActivity = (MainActivity) getActivity();
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                mainActivity.fab.show();
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                mainActivity.fab.hide();
+                return true;
+            }
+        });
     }
 
     @Override
