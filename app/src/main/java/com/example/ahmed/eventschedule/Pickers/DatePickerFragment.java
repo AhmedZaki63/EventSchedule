@@ -15,7 +15,7 @@ import java.util.Locale;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
-    Calendar calendar;
+    private Calendar calendar;
 
     @NonNull
     @Override

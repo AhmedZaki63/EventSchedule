@@ -15,7 +15,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-    Calendar calendar;
+    private Calendar calendar;
 
     @NonNull
     @Override

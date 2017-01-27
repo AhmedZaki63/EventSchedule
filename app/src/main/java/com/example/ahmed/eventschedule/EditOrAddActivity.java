@@ -3,6 +3,7 @@ package com.example.ahmed.eventschedule;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,7 +37,7 @@ public class EditOrAddActivity extends AppCompatActivity {
     public Button startDateButton, endDateButton, startTimeButton, endTimeButton, reminderDateButton, reminderTimeButton;
     public String title, location;
     public EditText nameText, locationText;
-    ImageView colorSelectionImage, locationSelectionImage;
+    private ImageView colorSelectionImage;
     private boolean inEdit;
 
     @Override
@@ -124,7 +125,7 @@ public class EditOrAddActivity extends AppCompatActivity {
             }
         });
 
-        locationSelectionImage = (ImageView) findViewById(R.id.location_selector);
+        ImageView locationSelectionImage = (ImageView) findViewById(R.id.location_selector);
         locationSelectionImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,7 +137,6 @@ public class EditOrAddActivity extends AppCompatActivity {
         if (inEdit) {
 
             int id = getIntent().getIntExtra("event_id", -1);
-            Toast.makeText(this, String.valueOf(id), Toast.LENGTH_LONG).show();
             Event currentEvent = MainFragment.controlRealm.getEvent(id);
 
             title = currentEvent.getName();
@@ -243,9 +243,10 @@ public class EditOrAddActivity extends AppCompatActivity {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setDefaults(Notification.DEFAULT_SOUND);
 
-        Intent launchIntent = new Intent(this, MainActivity.class)
-                .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        builder.setContentIntent(PendingIntent.getActivity(this, 0, launchIntent, 0))
+        Intent launchIntent = new Intent(Intent.makeMainActivity(new ComponentName(this, MainActivity.class)));
+        launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        builder.setContentIntent(PendingIntent.getActivity(this, 0, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT))
                 .setAutoCancel(true);
 
         Intent notificationIntent = new Intent(this, NotificationBroadcast.class);

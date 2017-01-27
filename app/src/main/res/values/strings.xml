@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EventSchedule</string>
+    <string name="app_name">Events Scheduler</string>
     <string name="event_title_text">Event Title</string>
     <string name="event_location_text">Event Location</string>
     <string name="event_from_text">From</string>

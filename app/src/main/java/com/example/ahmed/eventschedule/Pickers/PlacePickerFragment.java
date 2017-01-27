@@ -15,7 +15,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class PlacePickerFragment extends Fragment {
 
-    int PLACE_PICKER_REQUEST = 1;
+    private int PLACE_PICKER_REQUEST = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
