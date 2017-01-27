@@ -12,23 +12,20 @@ import com.example.ahmed.eventschedule.R;
 
 public class ColorPickerActivity extends AppCompatActivity {
 
-    static String selectedColor;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color_picker);
-        String[] arrayOfStrings = getResources().getStringArray(R.array.colors);
+        String[] colorsArray = getResources().getStringArray(R.array.colors);
         GridLayout gridLayout = (GridLayout) findViewById(R.id.grid_layout);
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             ImageView imageView = (ImageView) gridLayout.getChildAt(i);
-            imageView.setTag(arrayOfStrings[i]);
-            imageView.setColorFilter(Color.parseColor(arrayOfStrings[i]));
+            imageView.setTag(colorsArray[i]);
+            imageView.setColorFilter(Color.parseColor(colorsArray[i]));
         }
     }
 
     public void onClick(View view) {
-        selectedColor = view.getTag().toString();
         EditOrAddActivity.eventColor = view.getTag().toString();
         finish();
     }

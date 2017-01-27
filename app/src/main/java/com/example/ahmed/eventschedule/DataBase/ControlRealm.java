@@ -68,6 +68,18 @@ public class ControlRealm {
         return events;
     }
 
+    public Event getEvent(int id) {
+        EventRealm eve = realm.where(EventRealm.class).equalTo("id", id).findFirst();
+        //Converting Date to Calendar
+        Calendar startDate = Calendar.getInstance();
+        startDate.setTime(eve.getStartDate());
+        Calendar endDate = Calendar.getInstance();
+        endDate.setTime(eve.getEndDate());
+        Calendar reminderDate = Calendar.getInstance();
+        reminderDate.setTime(eve.getReminderDate());
+        return new Event(eve.getName(), eve.getPlace(), startDate, endDate, reminderDate, eve.getColor());
+    }
+
     public void editEvent(final Event event, final int id) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override

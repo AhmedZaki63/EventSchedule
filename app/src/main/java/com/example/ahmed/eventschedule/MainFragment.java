@@ -25,17 +25,11 @@ import java.util.ArrayList;
 public class MainFragment extends Fragment implements SearchView.OnQueryTextListener {
     private static final String PAGE_NUMBER = "section_number";
     public static ControlRealm controlRealm;
-    int page;
-    public static ArrayList<Event> upEvents, doneEvents;
-    ArrayList<Event> allEvents;
-    EventAdapter eventAdapter;
-    TextView emptyListText;
-    boolean isEmpty;
-    RecyclerView recyclerView;
-    SearchView searchView;
-
-    public MainFragment() {
-    }
+    public int page;
+    public ArrayList<Event> upEvents, doneEvents;
+    private EventAdapter eventAdapter;
+    private TextView emptyListText;
+    private SearchView searchView;
 
     public static MainFragment newInstance(int sectionNumber) {
         MainFragment fragment = new MainFragment();
@@ -52,10 +46,10 @@ public class MainFragment extends Fragment implements SearchView.OnQueryTextList
         page = getArguments().getInt(PAGE_NUMBER);
         emptyListText = (TextView) rootView.findViewById(R.id.empty_list_text);
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.events_list);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.events_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         controlRealm = new ControlRealm(getActivity());
-        allEvents = controlRealm.getAllEvents();
+        ArrayList<Event> allEvents = controlRealm.getAllEvents();
         upEvents = new ArrayList<>();
         doneEvents = new ArrayList<>();
         for (Event e : allEvents) {
@@ -65,7 +59,7 @@ public class MainFragment extends Fragment implements SearchView.OnQueryTextList
                 upEvents.add(e);
         }
 
-        eventAdapter = new EventAdapter(getActivity());
+        eventAdapter = new EventAdapter(getActivity(), this);
         switch (page) {
             case 0:
                 eventAdapter.changeData(upEvents);
@@ -81,13 +75,10 @@ public class MainFragment extends Fragment implements SearchView.OnQueryTextList
     }
 
     public void setEmptyListText() {
-        if (eventAdapter.isEmpty()) {
+        if (eventAdapter.isEmpty())
             emptyListText.setText("      No Events Available \n Please Add Some Events");
-            isEmpty = true;
-        } else {
+        else
             emptyListText.setText("");
-            isEmpty = false;
-        }
     }
 
     @Override

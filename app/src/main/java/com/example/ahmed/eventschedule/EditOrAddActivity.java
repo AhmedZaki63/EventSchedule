@@ -31,13 +31,13 @@ import java.util.Locale;
 
 public class EditOrAddActivity extends AppCompatActivity {
 
+    public static String eventColor;
     public Calendar startDate, endDate, eventStartTime, eventEndTime, reminderDate, reminderTime;
     public Button startDateButton, endDateButton, startTimeButton, endTimeButton, reminderDateButton, reminderTimeButton;
     public String title, location;
     public EditText nameText, locationText;
-    boolean inEdit;
-    public static String eventColor;
     ImageView colorSelectionImage, locationSelectionImage;
+    private boolean inEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,12 +134,10 @@ public class EditOrAddActivity extends AppCompatActivity {
         });
 
         if (inEdit) {
-            Event currentEvent;
-            int position = getIntent().getIntExtra("position", -1);
-            if (MainActivity.page == 0)
-                currentEvent = MainFragment.upEvents.get(position);
-            else
-                currentEvent = MainFragment.doneEvents.get(position);
+
+            int id = getIntent().getIntExtra("event_id", -1);
+            Toast.makeText(this, String.valueOf(id), Toast.LENGTH_LONG).show();
+            Event currentEvent = MainFragment.controlRealm.getEvent(id);
 
             title = currentEvent.getName();
             nameText.setText(currentEvent.getName());
@@ -191,12 +189,6 @@ public class EditOrAddActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(title) || TextUtils.isEmpty(location))
             Toast.makeText(EditOrAddActivity.this, "Please Enter All Data", Toast.LENGTH_LONG).show();
-        else if (endDate.compareTo(startDate) != 1)
-            Toast.makeText(getBaseContext(), "End Time is Before or Equal Start Time", Toast.LENGTH_LONG).show();
-        else if (currentDate.compareTo(endDate) == 1)
-            Toast.makeText(getBaseContext(), "End Time is Before or Equal Current Time", Toast.LENGTH_LONG).show();
-        else if (currentDate.compareTo(reminderDate) == 1)
-            Toast.makeText(getBaseContext(), "Reminder Time is Before or Equal Current Time", Toast.LENGTH_LONG).show();
         else {
             //Merge date and time and set seconds to 0
             startDate.set(Calendar.HOUR_OF_DAY, eventStartTime.get(Calendar.HOUR_OF_DAY));
@@ -209,29 +201,37 @@ public class EditOrAddActivity extends AppCompatActivity {
             reminderDate.set(Calendar.MINUTE, reminderTime.get(Calendar.MINUTE));
             reminderDate.set(Calendar.SECOND, 0);
 
-            final Event event = new Event(title, location, startDate, endDate, reminderDate, eventColor);
-            if (inEdit) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(EditOrAddActivity.this);
-                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        int position = getIntent().getIntExtra("position", -1);
-                        MainFragment.controlRealm.editEvent(event, MainFragment.upEvents.get(position).getId());
-                        NavUtils.navigateUpFromSameTask(EditOrAddActivity.this);
-                    }
-                });
-                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                AlertDialog dialog = alert.create();
-                dialog.setTitle("Do you Want To Save ?!");
-                dialog.show();
-            } else {
-                MainFragment.controlRealm.addEvent(event);
-                scheduleNotification(event);
-                NavUtils.navigateUpFromSameTask(EditOrAddActivity.this);
+            if (endDate.compareTo(startDate) != 1)
+                Toast.makeText(getBaseContext(), "End Time is Before or Equal Start Time", Toast.LENGTH_LONG).show();
+            else if (currentDate.compareTo(endDate) == 1)
+                Toast.makeText(getBaseContext(), "End Time is Before or Equal Current Time", Toast.LENGTH_LONG).show();
+            else if (currentDate.compareTo(reminderDate) == 1)
+                Toast.makeText(getBaseContext(), "Reminder Time is Before or Equal Current Time", Toast.LENGTH_LONG).show();
+            else {
+                final Event event = new Event(title, location, startDate, endDate, reminderDate, eventColor);
+                if (inEdit) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(EditOrAddActivity.this);
+                    alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            int eventID = getIntent().getIntExtra("event_id", -1);
+                            MainFragment.controlRealm.editEvent(event, eventID);
+                            NavUtils.navigateUpFromSameTask(EditOrAddActivity.this);
+                        }
+                    });
+                    alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = alert.create();
+                    dialog.setTitle("Do you Want To Save ?!");
+                    dialog.show();
+                } else {
+                    MainFragment.controlRealm.addEvent(event);
+                    scheduleNotification(event);
+                    NavUtils.navigateUpFromSameTask(EditOrAddActivity.this);
+                }
             }
         }
     }

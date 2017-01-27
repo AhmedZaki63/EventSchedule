@@ -4,6 +4,6 @@
     tools:context="com.example.ahmed.eventschedule.EditOrAddActivity">
     <item
         android:id="@+id/action_save"
-        android:title="Save"
+        android:title="@string/menu_save"
         app:showAsAction="always" />
 </menu>

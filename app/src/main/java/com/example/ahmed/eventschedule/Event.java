@@ -40,7 +40,7 @@ public class Event {
         this.id = id;
     }
 
-    public boolean isDone() {
+    boolean isDone() {
         return Done;
     }
 

@@ -10,7 +10,6 @@ import android.widget.TimePicker;
 
 import com.example.ahmed.eventschedule.EditOrAddActivity;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -30,7 +29,8 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        calendar.setTime(new Time(hourOfDay, minute, 0));
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
         EditOrAddActivity editOrAdd = (EditOrAddActivity) getActivity();
         SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
         switch (getTag()) {

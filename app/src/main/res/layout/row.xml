@@ -8,6 +8,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:orientation="horizontal"
         android:weightSum="10">
 
@@ -30,9 +31,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:fontFamily="sans-serif"
-                android:text="A"
                 android:textColor="#FFFFFF"
-                android:textSize="32dp" />
+                android:textSize="32sp" />
         </FrameLayout>
 
         <LinearLayout
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_delete" />
+                android:src="@drawable/ic_delete_cyan" />
         </FrameLayout>
 
     </LinearLayout>

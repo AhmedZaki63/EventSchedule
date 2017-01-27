@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
-        android:text="Event Title :"
+        android:text="@string/event_title_text"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="normal|bold|italic" />
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:paddingTop="15dp"
-        android:text="Event Location :"
+        android:text="@string/event_location_text"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="normal|bold|italic" />
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="From :"
+            android:text="@string/event_from_text"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="normal|bold|italic" />
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="To :"
+            android:text="@string/event_to_text"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="normal|bold|italic" />
@@ -144,7 +144,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="Reminder :"
+            android:text="@string/event_reminder_text"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="normal|bold|italic" />

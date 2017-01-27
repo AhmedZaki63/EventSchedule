@@ -13,7 +13,7 @@ import java.util.Locale;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    int position;
+    int eventID;
     Event event;
 
     @Override
@@ -21,12 +21,8 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        position = getIntent().getIntExtra("position", -1);
-
-        if (MainActivity.page == 0)
-            event = MainFragment.upEvents.get(position);
-        else
-            event = MainFragment.doneEvents.get(position);
+        eventID = getIntent().getIntExtra("event_id", -1);
+        event = MainFragment.controlRealm.getEvent(eventID);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("E dd/MM/yyyy", Locale.ENGLISH);
         SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
@@ -72,11 +68,11 @@ public class DetailsActivity extends AppCompatActivity {
         switch (id) {
             case R.id.action_edit:
                 Intent intent = new Intent(this, EditOrAddActivity.class)
-                        .putExtra("position", position);
+                        .putExtra("event_id", eventID);
                 startActivity(intent);
                 return true;
             case R.id.action_delete:
-                MainFragment.controlRealm.deleteEvent(event.getId());
+                MainFragment.controlRealm.deleteEvent(eventID);
                 NavUtils.navigateUpFromSameTask(DetailsActivity.this);
                 return true;
         }

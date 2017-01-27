@@ -13,10 +13,6 @@ import com.example.ahmed.eventschedule.Adapters.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    SectionsPagerAdapter sectionsPagerAdapter;
-    ViewPager viewPager;
-    public static int page;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,19 +21,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
-        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        page = 0;
         // Set up the ViewPager with the sections adapter.
-        viewPager = (ViewPager) findViewById(R.id.container);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(sectionsPagerAdapter);
-
-        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                page = position;
-            }
-        });
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);

@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.ahmed.eventschedule.DetailsActivity;
 import com.example.ahmed.eventschedule.Event;
-import com.example.ahmed.eventschedule.MainActivity;
 import com.example.ahmed.eventschedule.MainFragment;
 import com.example.ahmed.eventschedule.R;
 
@@ -24,9 +23,11 @@ import java.util.Locale;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
     private ArrayList<Event> events;
     private Context context;
+    private MainFragment mainFragment;
 
-    public EventAdapter(Context context) {
+    public EventAdapter(Context context, MainFragment mainFragment) {
         this.context = context;
+        this.mainFragment = mainFragment;
     }
 
     public void changeData(ArrayList<Event> events) {
@@ -41,7 +42,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
 
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
-        Event event = events.get(position);
+        final Event event = events.get(position);
 
         holder.eventName.setText(event.getName());
         holder.icon.setColorFilter(Color.parseColor(event.getColor()));
@@ -53,7 +54,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailsActivity.class)
-                        .putExtra("position", holder.getAdapterPosition());
+                        .putExtra("event_id", events.get(holder.getAdapterPosition()).getId());
                 context.startActivity(intent);
             }
         });
@@ -62,12 +63,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
             @Override
             public void onClick(View view) {
                 MainFragment.controlRealm.deleteEvent(events.get(holder.getAdapterPosition()).getId());
-                if (MainActivity.page == 0)
-                    MainFragment.upEvents.remove(holder.getAdapterPosition());
+                if (mainFragment.page == 0)
+                    mainFragment.upEvents.remove(holder.getAdapterPosition());
                 else
-                    MainFragment.doneEvents.remove(holder.getAdapterPosition());
+                    mainFragment.doneEvents.remove(holder.getAdapterPosition());
                 events.remove(holder.getAdapterPosition());
                 notifyItemRemoved(holder.getAdapterPosition());
+                mainFragment.setEmptyListText();
             }
         });
     }

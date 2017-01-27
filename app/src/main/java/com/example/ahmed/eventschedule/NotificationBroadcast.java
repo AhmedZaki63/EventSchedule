@@ -8,7 +8,7 @@ import android.content.Intent;
 
 public class NotificationBroadcast extends BroadcastReceiver {
 
-    public static String NOTIFICATION_ID = "notification-id";
+    public static String NOTIFICATION_ID = "notification-eventID";
     public static String NOTIFICATION = "notification";
 
     @Override

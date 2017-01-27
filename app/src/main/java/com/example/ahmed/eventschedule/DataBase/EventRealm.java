@@ -37,35 +37,35 @@ public class EventRealm extends RealmObject {
         this.name = name;
     }
 
-    public String getPlace() {
+    String getPlace() {
         return place;
     }
 
-    public void setPlace(String place) {
+    void setPlace(String place) {
         this.place = place;
     }
 
-    public Date getStartDate() {
+    Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
-    public Date getReminderDate() {
+    Date getReminderDate() {
         return reminderDate;
     }
 
-    public void setReminderDate(Date reminderDate) {
+    void setReminderDate(Date reminderDate) {
         this.reminderDate = reminderDate;
     }
 

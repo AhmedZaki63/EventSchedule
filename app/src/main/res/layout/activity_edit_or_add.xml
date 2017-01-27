@@ -18,6 +18,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <android.support.design.widget.TextInputLayout
@@ -30,7 +31,7 @@
                     android:id="@+id/event_name_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Event Title"
+                    android:hint="@string/event_title_text"
                     android:inputType="textAutoComplete"
                     android:maxLines="1"
                     android:textColor="@android:color/black" />
@@ -49,7 +50,6 @@
                     android:layout_height="36dp"
                     android:layout_gravity="center"
                     android:src="@color/colorAccent"
-                    android:text="Color"
                     android:textSize="20sp" />
             </FrameLayout>
         </LinearLayout>
@@ -57,6 +57,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <android.support.design.widget.TextInputLayout
@@ -69,7 +70,7 @@
                     android:id="@+id/event_location_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Event Location"
+                    android:hint="@string/event_location_text"
                     android:inputType="textAutoComplete"
                     android:maxLines="1"
                     android:textColor="@android:color/black" />
@@ -87,8 +88,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_place"
-                    android:text="Color" />
+                    android:src="@drawable/ic_place_red" />
             </FrameLayout>
         </LinearLayout>
 
@@ -102,7 +102,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1.2"
                 android:gravity="center"
-                android:text="From"
+                android:text="@string/event_from_text"
                 android:textSize="20sp" />
 
             <Button
@@ -111,8 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:padding="15dp"
-                android:text="Start Date" />
+                android:padding="15dp" />
 
             <Button
                 android:id="@+id/start_time_button"
@@ -120,8 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:padding="15dp"
-                android:text="Start Time" />
+                android:padding="15dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -134,7 +132,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1.2"
                 android:gravity="center"
-                android:text="To"
+                android:text="@string/event_to_text"
                 android:textSize="20sp" />
 
             <Button
@@ -143,8 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:padding="15dp"
-                android:text="End Date" />
+                android:padding="15dp" />
 
             <Button
                 android:id="@+id/end_time_button"
@@ -152,8 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:padding="15dp"
-                android:text="End Time" />
+                android:padding="15dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -166,7 +162,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1.2"
                 android:gravity="center"
-                android:text="Reminder"
+                android:text="@string/event_reminder_text"
                 android:textSize="18sp" />
 
             <Button
@@ -175,8 +171,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:padding="15dp"
-                android:text="Reminder Date" />
+                android:padding="15dp" />
 
             <Button
                 android:id="@+id/reminder_time_button"
@@ -184,8 +179,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:padding="15dp"
-                android:text="Reminder Time" />
+                android:padding="15dp" />
         </LinearLayout>
 
     </LinearLayout>
